@@ -8,20 +8,26 @@ interface SummaryDisplayProps {
   status: GenerationStatus;
   errorMessage?: string;
   onContentChange: (newContent: string) => void;
+  onCopy?: () => void; // New prop for notifying parent component
 }
 
 export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({ 
   content, 
   status, 
   errorMessage,
-  onContentChange
+  onContentChange,
+  onCopy
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleCopy = () => {
     if (content) {
       navigator.clipboard.writeText(content);
-      alert('内容已复制到剪贴板！');
+      alert('内容已复制到剪贴板！系统将自动学习此版本以优化未来的生成结果。');
+      // Trigger the parent callback to save to DB
+      if (onCopy) {
+        onCopy();
+      }
     }
   };
 
@@ -51,6 +57,7 @@ export const SummaryDisplay: React.FC<SummaryDisplayProps> = ({
         <div className="animate-bounce w-6 h-6 bg-indigo-500 rounded-full mb-4"></div>
         <p className="text-lg font-medium text-gray-700">AI 正在思考中...</p>
         <p className="text-sm text-gray-500 mt-2">正在根据您的要求撰写总结</p>
+        <p className="text-xs text-gray-400 mt-1">同时在学习过往的优秀案例...</p>
       </div>
     );
   }
