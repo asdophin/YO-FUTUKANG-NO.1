@@ -1,5 +1,5 @@
 {
-  "name": "yo-futukang-a",
+  "name": "右满舵总结代工一号，叫我小总",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +11,8 @@
   "dependencies": {
     "react-dom": "^19.2.0",
     "react": "^19.2.0",
-    "@google/genai": "^1.30.0"
+    "@google/genai": "^1.30.0",
+    "@supabase/supabase-js": "^2.84.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

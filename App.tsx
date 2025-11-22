@@ -6,6 +6,7 @@ import { Button } from './components/Button';
 import { StyleSelector } from './components/StyleSelector';
 import { SummaryDisplay } from './components/SummaryDisplay';
 import { generateCourseSummary } from './services/geminiService';
+import { saveTrainingExample } from './services/db'; // Import DB service
 import { SummaryFormData, GenerationStatus, Template } from './types';
 
 const TEMPLATES: Template[] = [
@@ -199,9 +200,12 @@ const App: React.FC = () => {
 
   const handleResultEdit = (newContent: string) => {
     setResultContent(newContent);
-    // In a real app, we could denounce this input and save it to a backend
-    // to improve the algorithm as requested.
-    // console.log("User edited content (for training):", newContent);
+  };
+
+  // Triggered when the user clicks "Copy Full Text"
+  const handleCopyAction = () => {
+    // Save the current (possibly edited) result as a good example to the database
+    saveTrainingExample(formData, resultContent);
   };
 
   return (
@@ -306,6 +310,7 @@ const App: React.FC = () => {
               status={status} 
               errorMessage={errorMsg}
               onContentChange={handleResultEdit}
+              onCopy={handleCopyAction}
             />
           </div>
 
